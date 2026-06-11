@@ -1,0 +1,28 @@
+.skills-page {
+  padding: var(--space-5);
+}
+
+.skill-card {
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(circle at top right, rgba(139, 92, 246, 0.18), transparent 9rem),
+    rgba(15, 23, 42, 0.62);
+}
+
+.skill-card span {
+  display: block;
+  margin-bottom: var(--space-4);
+  font-size: 1.8rem;
+}
+
+.skill-card h3 {
+  margin: 0;
+}
+
+.skill-card p {
+  margin: var(--space-1) 0 var(--space-4);
+  color: var(--color-primary);
+  font-weight: 800;
+}

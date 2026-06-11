@@ -1,0 +1,18 @@
+.app-shell {
+    min-height: 100vh;
+    display: flex;
+    background:
+      radial-gradient(circle at top left, rgba(139, 92, 246, 0.18), transparent 32rem),
+      radial-gradient(circle at top right, rgba(34, 211, 238, 0.12), transparent 28rem),
+      #050816;
+    color: #f8fafc;
+  }
+  
+  .main-content {
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .page-content {
+    padding: 0 var(--space-6);
+  }

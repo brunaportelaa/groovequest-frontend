@@ -1,0 +1,138 @@
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: var(--space-4);
+}
+
+.hero-card,
+.section-card,
+.stat-card {
+  padding: var(--space-5);
+}
+
+.hero-card {
+  grid-column: span 1;
+}
+
+.hero-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin: var(--space-5) 0;
+}
+
+.hero-content h3 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.hero-content p {
+  margin-top: var(--space-1);
+}
+
+.level-badge {
+  width: 6.5rem;
+  height: 6.5rem;
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--color-primary);
+  border-radius: 1.5rem;
+  background: rgba(139, 92, 246, 0.14);
+  box-shadow: var(--shadow-glow-purple);
+}
+
+.level-badge small,
+.level-badge strong {
+  display: block;
+  text-align: center;
+}
+
+.level-badge small {
+  color: var(--color-text-muted);
+  font-size: 0.7rem;
+  font-weight: 800;
+}
+
+.level-badge strong {
+  color: #f472b6;
+  font-size: 2.2rem;
+  line-height: 1;
+}
+
+.xp-label {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--space-2);
+  color: var(--color-text-soft);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.stat-card {
+  display: grid;
+  align-content: center;
+  gap: var(--space-2);
+}
+
+.stat-icon {
+  font-size: 1.5rem;
+}
+
+.stat-card p {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+.stat-card strong {
+  font-size: 2rem;
+  text-transform: uppercase;
+}
+
+.section-card {
+  grid-column: span 2;
+}
+
+.skills-preview {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.skill-preview-card {
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: rgba(15, 23, 42, 0.62);
+}
+
+.skill-preview-card span {
+  display: block;
+  margin-bottom: var(--space-3);
+  font-size: 1.5rem;
+}
+
+.skill-preview-card strong,
+.skill-preview-card small {
+  display: block;
+}
+
+.skill-preview-card small {
+  margin-top: var(--space-1);
+  color: var(--color-primary);
+  font-weight: 800;
+}
+
+@media (max-width: 1100px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .section-card {
+    grid-column: span 1;
+  }
+
+  .skills-preview {
+    grid-template-columns: 1fr;
+  }
+}

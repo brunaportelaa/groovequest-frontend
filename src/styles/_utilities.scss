@@ -1,0 +1,52 @@
+.gq-page-title {
+    margin: 0;
+    font-size: clamp(1.75rem, 2vw, 2.4rem);
+    font-weight: 900;
+    letter-spacing: -0.04em;
+  }
+  
+  .gq-page-subtitle {
+    margin: var(--space-1) 0 0;
+    color: var(--color-text-muted);
+  }
+  
+  .gq-grid {
+    display: grid;
+    gap: var(--space-4);
+  }
+  
+  .gq-grid-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  
+  .gq-grid-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  
+  .gq-grid-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  
+  .gq-stack {
+    display: grid;
+    gap: var(--space-4);
+  }
+  
+  .gq-muted {
+    color: var(--color-text-muted);
+  }
+  
+  .gq-text-gradient {
+    background: var(--gradient-brand);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  
+  @media (max-width: 900px) {
+    .gq-grid-2,
+    .gq-grid-3,
+    .gq-grid-4 {
+      grid-template-columns: 1fr;
+    }
+  }

@@ -1,0 +1,102 @@
+.sidebar {
+  position: sticky;
+  top: 0;
+  width: var(--sidebar-width);
+  height: 100vh;
+  padding: var(--space-6) var(--space-4);
+  border-right: 1px solid var(--color-border);
+  background: rgba(15, 23, 42, 0.62);
+  backdrop-filter: blur(18px);
+  display: flex;
+  flex-direction: column;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-8);
+}
+
+.brand-mark {
+  width: 2.75rem;
+  height: 2.75rem;
+  display: grid;
+  place-items: center;
+  border-radius: 1rem;
+  background: var(--gradient-brand);
+  color: white;
+  font-weight: 950;
+  letter-spacing: -0.08em;
+  box-shadow: var(--shadow-glow-purple);
+}
+
+.brand strong,
+.brand small {
+  display: block;
+}
+
+.brand strong {
+  font-size: 1.05rem;
+  line-height: 1.1;
+}
+
+.brand small {
+  margin-top: 0.15rem;
+  color: var(--color-text-muted);
+  font-size: 0.75rem;
+}
+
+.nav-list {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.nav-list a {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-md);
+  color: var(--color-text-soft);
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.nav-list a span {
+  width: 1.25rem;
+  color: var(--color-secondary);
+}
+
+.nav-list a:hover,
+.nav-list a.active {
+  color: white;
+  background: linear-gradient(
+    135deg,
+    rgba(139, 92, 246, 0.35),
+    rgba(236, 72, 153, 0.18)
+  );
+  box-shadow: var(--shadow-glow-purple);
+}
+
+.premium-card {
+  margin-top: auto;
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(circle at top right, rgba(236, 72, 153, 0.2), transparent 8rem),
+    rgba(15, 23, 42, 0.76);
+}
+
+.premium-card h2 {
+  margin: var(--space-3) 0 var(--space-2);
+  font-size: 1rem;
+}
+
+.premium-card p {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
