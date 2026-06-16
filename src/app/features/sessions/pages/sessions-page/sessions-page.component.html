@@ -8,6 +8,43 @@
     <button class="gq-button">New Session</button>
   </div>
 
+  <div class="api-test-box">
+    <h3>Backend Connection Test</h3>
+    <p>
+      This temporary block calls <strong>GET /api/sessions</strong> and displays
+      the real backend response.
+    </p>
+
+    <button 
+      class="gq-button-secondary"
+      type="button"
+      (click)="loadSessions()"
+      [disabled]="isLoading"
+    >
+      {{ isLoading ? 'Loading sessions...' : 'Load sessions from API'   }}
+    </button>
+
+    @if (sessions.length > 0) {
+      <pre>{{ sessions | json }}</pre>
+    }
+
+    @if (!isLoading && sessions.length === 0 && !apiError) {
+      <div class="gq-empty-state">
+        No sessions loaded yet. Click the button to test the backend connection.
+      </div>
+    }
+
+    @if (apiError) {
+      <div class="error-message">
+        <strong>{{ apiError.message }}</strong>
+
+        @if (apiError.status) {
+          <span>Status: {{ apiError.status }}</span>
+        }
+      </div>
+    }
+  </div>
+
   <div class="gq-emptystate">
     No sessions loaded yet.
   </div>
