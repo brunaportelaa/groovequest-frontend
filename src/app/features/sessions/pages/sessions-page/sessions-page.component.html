@@ -2,39 +2,19 @@
   <div class="gq-card-header">
     <div>
       <h2 class="gq-card-title">Training Sessions</h2>
-      <p class="gq-card-subtitle">Track your training sessions and progress.</p>
+      <p class="gq-card-subtitle">Review your dance practices, XP gains, and training consistency.</p>
     </div>
 
     <button class="gq-button">New Session</button>
   </div>
 
-  <div class="api-test-box">
-    <h3>Backend Connection Test</h3>
-    <p>
-      This temporary block calls <strong>GET /api/sessions</strong> and displays
-      the real backend response.
-    </p>
+  @if (isLoading) {
+    <section class="gq-card state-card">
+      <p>Loading training sessions...</p>
+    </section>
+  }
 
-    <button 
-      class="gq-button-secondary"
-      type="button"
-      (click)="loadSessions()"
-      [disabled]="isLoading"
-    >
-      {{ isLoading ? 'Loading sessions...' : 'Load sessions from API'   }}
-    </button>
-
-    @if (sessions.length > 0) {
-      <pre>{{ sessions | json }}</pre>
-    }
-
-    @if (!isLoading && sessions.length === 0 && !apiError) {
-      <div class="gq-empty-state">
-        No sessions loaded yet. Click the button to test the backend connection.
-      </div>
-    }
-
-    @if (apiError) {
+  @if (apiError) {
       <div class="error-message">
         <strong>{{ apiError.message }}</strong>
 
@@ -42,12 +22,61 @@
           <span>Status: {{ apiError.status }}</span>
         }
       </div>
-    }
-  </div>
 
-  <div class="gq-emptystate">
-    No sessions loaded yet.
-  </div>
+      <button 
+      class="gq-button-secondary"
+      type="button"
+      (click)="loadSessions()"
+    >
+      Try again
+    </button>
+  }
 
-  
+  @if (!isLoading && sessions.length === 0 && !apiError) {
+      <section class="gq-card state-card">
+        <p>No training sessions found. Start your first session to track your dance journey!</p> 
+      </section>
+  }
+
+
+  @if (!isLoading && !apiError && sessions.length > 0) {
+    <section class="sessions-list">
+      @for (session of sessions; track trackBySessionId($index, session)) {
+        <article class="gq-card session-card">
+          <div class="session-main">
+            <div class="session-icon">
+              ✦
+            </div>
+
+            <div>
+              <div class="session-title-row">
+                <h3>{{ formatSkill(session.skill) }}</h3>
+                <span
+                  class="intensity-badge"
+                  [ngClass]="getIntensityClass(session.intensity)"
+                >
+                  {{ formatIntensity(session.intensity) }}
+                </span>
+              </div>
+
+              <p class="session-date">{{ session.date | date:'MMM d, y' }}</p>
+
+              @if (session.notes) {
+                <p class="session-notes">{{ session.notes }}</p>
+              }
+            </div>
+          </div>
+
+          <div class="session-stats">
+            <div>
+              <span>Duration</span>
+              <strong>{{ session.durationMinutes }} min</strong>
+            </div>
+              <span>XP Gained</span>
+              <strong class="xp-value">{{ session.xpGained }}</strong>
+          </div>
+        </article>
+      }
+    </section>
+  }
 </section>

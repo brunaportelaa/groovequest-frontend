@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { JsonPipe } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { DatePipe, NgClass } from '@angular/common';
 
-import { TrainingSession } from '../../../../core/models/training-session.model';
+import { DanceSkill, TrainingIntensity, TrainingSession } from '../../../../core/models/training-session.model';
 import { ApiError } from '../../../../core/models/api-error.model';
 import { TrainingSessionService } from '../../../../core/services/training-session.service';
 import { ApiErrorService } from '../../../../core/services/api-error.service';
@@ -9,11 +9,11 @@ import { ApiErrorService } from '../../../../core/services/api-error.service';
 @Component({
   selector: 'app-sessions-page',
   standalone: true,
-  imports: [JsonPipe],
+  imports: [DatePipe, NgClass],
   templateUrl: './sessions-page.component.html',
   styleUrl: './sessions-page.component.scss'
 })
-export class SessionsPageComponent {
+export class SessionsPageComponent implements OnInit{
 
   isLoading = false;
   sessions: TrainingSession[] = [];
@@ -23,6 +23,10 @@ export class SessionsPageComponent {
     private readonly trainingSessionService: TrainingSessionService,
     private readonly apiErrorService: ApiErrorService
   ) {}
+
+  ngOnInit():void {
+    this.loadSessions();
+  }
 
   loadSessions(): void {
     this.isLoading = true;
@@ -38,5 +42,37 @@ export class SessionsPageComponent {
         this.isLoading = false;
       }
     })
+  }
+
+  formatSkill(skill: DanceSkill): string {
+    const labels: Record<DanceSkill, string> = {
+      HIP_HOP: 'Hip Hop',
+      JAZZ_FUNK: 'Jazz Funk',
+      HOUSE: 'House',
+      PERFORMANCE: 'Performance',
+      FLEXIBILITY: 'Flexibility',
+      FOUNDATION: 'Foundation',
+      MUSICALITY: 'Musicality',
+      CHOREO: 'Choreo',
+      COMPETITION: 'Competition',
+    }
+    return labels[skill];
+  }
+
+  formatIntensity(intensity: TrainingIntensity): string {
+    const labels: Record<TrainingIntensity, string> = {
+      LOW: 'Low',
+      MEDIUM: 'Medium',
+      HIGH: 'High',
+    }
+    return labels[intensity];
+  }
+
+  getIntensityClass(intensity: TrainingIntensity): string {
+    return `intensity-${intensity.toLowerCase()}`;
+  }
+
+  trackBySessionId(_index: number, session: TrainingSession): number {
+    return session.id;
   }
 }
