@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { TrainingSession } from '../models/training-session.model';
+import { CreateTrainingSessionRequest, TrainingSession } from '../models/training-session.model';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -15,5 +15,9 @@ export class TrainingSessionService {
 
   findAll(): Observable<TrainingSession[]> {
     return this.http.get<TrainingSession[]>(this.apiUrl)
+  }
+
+  create(request: CreateTrainingSessionRequest): Observable<TrainingSession> {
+    return this.http.post<TrainingSession>(this.apiUrl, request);
   }
 }

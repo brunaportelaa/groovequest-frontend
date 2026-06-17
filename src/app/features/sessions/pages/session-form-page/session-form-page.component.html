@@ -1,0 +1,106 @@
+<section class="section-form-page">
+    <div class="page-header">
+        <div>
+            <h2 class="gq-page-title">New Training Session</h2>
+            <p class="gq-page-subtitle">Log your practice section and track your progress</p>
+        </div>
+
+        <a routerLink="/sessions" class="gq-button-secondary">Back to Sessions</a>
+    </div>
+
+    <section class="gq-card form-card">
+        <form class="session-form" [formGroup]="form" (ngSubmit)="save()">
+            <div class="form-grid">
+                <div class="form-field">
+                    <label for="date">Date</label>
+                    <input id="date" type="date" formControlName="date">
+
+                    @if (form.controls.date.touched && form.controls.date.hasError('required')) {
+                        <div class="field-error">Date is required.</div>
+                    }
+                </div>
+
+                <div class="form-field">
+                    <label for="durationMinutes">Duration (minutes)</label>
+                    <input id="durationMinutes" type="number" formControlName="duration" min="1">
+
+                    @if (form.controls.durationMinutes.touched && form.controls.durationMinutes.hasError('required')) {
+                        <div class="field-error">Duration is required.</div>
+                    }
+                    @else if (form.controls.durationMinutes.touched && form.controls.durationMinutes.hasError('min')) {
+                        <div class="field-error">Duration must be at least 1 minute.</div>
+                    }
+                </div>
+
+                <div class="form-field">
+                    <label for="intensity">Intensity</label>
+                    <select id="intensity" formControlName="intensity">
+                        @for (intensity of intensityOptions; track intensity) {
+                            <option [value]="intensity">
+                                {{ formatIntensity(intensity) }}
+                            </option>
+                        }
+                    </select>
+
+                    @if (form.controls.intensity.touched && form.controls.intensity.hasError('required')) {
+                        <div class="field-error">Intensity is required.</div>
+                    }
+                </div>
+
+                <div class="form-field">
+                    <label for="skill">Skill</label>
+                    <select id="skill" formControlName="skill">
+                        @for (skill of skillOptions; track skill) {
+                            <option [value]="skill">
+                                {{ formatSkill(skill) }}
+                            </option>
+                        }
+                    </select>
+
+                    @if (form.controls.skill.touched && form.controls.skill.hasError('required')) {
+                        <div class="field-error">Skill is required.</div>
+                    }
+                </div>
+
+                <div class="form-field full-width">
+                    <label for="notes">Notes</label>
+                    <textarea 
+                        id="notes" 
+                        formControlName="notes" 
+                        placeholder="Add any details about your session, such as what you worked on or how you felt."
+                        maxlength="500"
+                    ></textarea>
+                    <small class="field-hint">{{ form.controls.notes.value.length || 0 }}/500 characters</small>
+
+                    @if (form.controls.notes.touched && form.controls.notes.hasError('max-length')) {
+                        <small class="field-error">Notes cannot exceed 500 characters.</small>
+                    }
+                </div>
+            </div>
+
+            @if (apiError){
+                <div class="error-message">
+                    <strong>{{ apiError.message }}</strong>
+                </div>
+
+                @if (apiError.status) {
+                    <span>Status: {{ apiError.status }}</span>
+                }
+            }
+
+            <div class="form-actions">
+                <a class="gq-button-secondary" routerLink="/sessions">
+                    Cancel
+                </a>
+
+                <button 
+                    class="gq-button"
+                    type="submit"
+                    [disabled]="isSaving"
+                >
+                    {{ isSaving ? 'Saving...' : 'Save Session' }}
+                </button>
+            </div>
+        </form>
+    </section>
+</section>

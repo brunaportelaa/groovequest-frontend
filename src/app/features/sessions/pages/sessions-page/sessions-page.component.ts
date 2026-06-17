@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DatePipe, NgClass } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 import { DanceSkill, TrainingIntensity, TrainingSession } from '../../../../core/models/training-session.model';
 import { ApiError } from '../../../../core/models/api-error.model';
@@ -9,7 +10,7 @@ import { ApiErrorService } from '../../../../core/services/api-error.service';
 @Component({
   selector: 'app-sessions-page',
   standalone: true,
-  imports: [DatePipe, NgClass],
+  imports: [DatePipe, NgClass, RouterLink],
   templateUrl: './sessions-page.component.html',
   styleUrl: './sessions-page.component.scss'
 })

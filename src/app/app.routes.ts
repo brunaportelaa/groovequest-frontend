@@ -3,6 +3,7 @@ import { DashboardPageComponent } from './features/dashboard/pages/dashboard-pag
 import { AppLayoutComponent } from './layout/app-layout/app-layout.component';
 import { SessionsPageComponent } from './features/sessions/pages/sessions-page/sessions-page.component';
 import { SkillsPageComponent } from './features/skills/pages/skills-page/skills-page.component';
+import { SessionFormPageComponent } from './features/sessions/pages/session-form-page/session-form-page.component';
 
 export const routes: Routes = [
     {
@@ -21,6 +22,10 @@ export const routes: Routes = [
             {
                 path: 'sessions',
                 component: SessionsPageComponent
+            },
+            {
+                path: 'sessions/new',
+                component: SessionFormPageComponent
             },
             {
                 path: 'skills',
