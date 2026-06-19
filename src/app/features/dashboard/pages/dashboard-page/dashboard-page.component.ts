@@ -7,6 +7,11 @@ import {
   Dashboard,
   SkillProgression,
 } from '../../../../core/models/dashboard.model';
+
+import {
+  formatSkill,
+} from '../../../../core/utils/training-session-presentation';
+
 import { DanceSkill } from '../../../../core/models/training-session.model';
 import { ApiErrorService } from '../../../../core/services/api-error.service';
 import { DashboardService } from '../../../../core/services/dashboard.service';
@@ -22,6 +27,8 @@ export class DashboardPageComponent implements OnInit {
   isLoading = false;
   dashboard: Dashboard | null = null;
   apiError: ApiError | null = null;
+
+  readonly formatSkill = formatSkill;
 
   constructor(
     private readonly dashboardService: DashboardService,
@@ -47,11 +54,6 @@ export class DashboardPageComponent implements OnInit {
       }
     })
   }
-
-    formatSkill(skill: DanceSkill | null): string {
-    if (!skill) {
-      return 'No skill yet';
-    }
 
     const labels: Record<DanceSkill, string> = {
       HIP_HOP: 'Hip Hop',

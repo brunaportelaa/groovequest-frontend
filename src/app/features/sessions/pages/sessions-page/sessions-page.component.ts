@@ -2,7 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { DatePipe, NgClass } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
-import { DanceSkill, TrainingIntensity, TrainingSession } from '../../../../core/models/training-session.model';
+import { TrainingSession } from '../../../../core/models/training-session.model';
+
+import {
+  formatIntensity,
+  formatSkill,
+  getIntensityClass,
+} from '../../../../core/utils/training-session-presentation';
+
 import { ApiError } from '../../../../core/models/api-error.model';
 import { TrainingSessionService } from '../../../../core/services/training-session.service';
 import { ApiErrorService } from '../../../../core/services/api-error.service';
@@ -20,6 +27,10 @@ export class SessionsPageComponent implements OnInit{
   deletingSessionId: number | null = null;
   sessions: TrainingSession[] = [];
   apiError: ApiError | null = null;
+  
+  readonly formatSkill = formatSkill;
+  readonly formatIntensity = formatIntensity;
+  readonly getIntensityClass = getIntensityClass;
 
   constructor(
     private readonly trainingSessionService: TrainingSessionService,
@@ -67,34 +78,6 @@ export class SessionsPageComponent implements OnInit{
       }
     });
 
-  }
-
-  formatSkill(skill: DanceSkill): string {
-    const labels: Record<DanceSkill, string> = {
-      HIP_HOP: 'Hip Hop',
-      JAZZ_FUNK: 'Jazz Funk',
-      HOUSE: 'House',
-      PERFORMANCE: 'Performance',
-      FLEXIBILITY: 'Flexibility',
-      FOUNDATION: 'Foundation',
-      MUSICALITY: 'Musicality',
-      CHOREO: 'Choreo',
-      COMPETITION: 'Competition',
-    }
-    return labels[skill];
-  }
-
-  formatIntensity(intensity: TrainingIntensity): string {
-    const labels: Record<TrainingIntensity, string> = {
-      LOW: 'Low',
-      MEDIUM: 'Medium',
-      HIGH: 'High',
-    }
-    return labels[intensity];
-  }
-
-  getIntensityClass(intensity: TrainingIntensity): string {
-    return `intensity-${intensity.toLowerCase()}`;
   }
 
   trackBySessionId(_index: number, session: TrainingSession): number {

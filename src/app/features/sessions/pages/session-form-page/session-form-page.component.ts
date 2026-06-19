@@ -11,6 +11,14 @@ import {
   DanceSkill,
   TrainingIntensity,
 } from '../../../../core/models/training-session.model';
+
+import {
+  DANCE_SKILL_OPTIONS,
+  TRAINING_INTENSITY_OPTIONS,
+  formatIntensity,
+  formatSkill,
+} from '../../../../core/utils/training-session-presentation';
+
 import { ApiError } from '../../../../core/models/api-error.model';
 import { ApiErrorService } from '../../../../core/services/api-error.service';
 import { TrainingSessionService } from '../../../../core/services/training-session.service';
@@ -36,19 +44,11 @@ export class SessionFormPageComponent implements OnInit {
   // Select options
   // ---------------------------------------------------------------------------
 
-  readonly intensityOptions: TrainingIntensity[] = ['LOW', 'MEDIUM', 'HIGH'];
+  readonly intensityOptions = TRAINING_INTENSITY_OPTIONS;
+  readonly skillOptions = DANCE_SKILL_OPTIONS;
 
-  readonly skillOptions: DanceSkill[] = [
-    'FLEXIBILITY',
-    'HIP_HOP',
-    'JAZZ_FUNK',
-    'HOUSE',
-    'PERFORMANCE',
-    'FOUNDATION',
-    'MUSICALITY',
-    'CHOREO',
-    'COMPETITION'
-  ];
+  readonly formatSkill = formatSkill;
+  readonly formatIntensity = formatIntensity;
 
   // ---------------------------------------------------------------------------
   // Reactive form
@@ -204,36 +204,6 @@ export class SessionFormPageComponent implements OnInit {
       skill: formValue.skill,
       notes: this.normalizeNotes(formValue.notes),
     };
-  }
-
-  // ---------------------------------------------------------------------------
-  // Display / formatting helpers
-  // ---------------------------------------------------------------------------
-
-  formatSkill(skill: DanceSkill): string {
-    const labels: Record<DanceSkill, string> = {
-      HIP_HOP: 'Hip Hop',
-      JAZZ_FUNK: 'Jazz Funk',
-      HOUSE: 'House',
-      PERFORMANCE: 'Performance',
-      FLEXIBILITY: 'Flexibility',
-      FOUNDATION: 'Foundation',
-      MUSICALITY: 'Musicality',
-      CHOREO: 'Choreo',
-      COMPETITION: 'Competition',
-    };
-
-    return labels[skill];
-  }
-
-  formatIntensity(intensity: TrainingIntensity): string {
-    const labels: Record<TrainingIntensity, string> = {
-      LOW: 'Low',
-      MEDIUM: 'Medium',
-      HIGH: 'High',
-    };
-
-    return labels[intensity];
   }
 
   // ---------------------------------------------------------------------------
