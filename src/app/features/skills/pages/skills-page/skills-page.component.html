@@ -1,39 +1,78 @@
-<section class="gq-card skills-page">
-  <div class="gq-card-header">
-    <h2 class="gq-card-title">Skills</h2>
-    <p class="gq-card-subtitle">Skill progression will become the RPG core of GrooveQuest.</p>
+<section class="skills-page">
+  <div class="skills-header">
+    <div>
+      <h2 class="section-title">Skill progression</h2>
+      <p class="section-subtitle">
+        Track your XP, levels, and growth across each dance skill.
+      </p>
+    </div>
   </div>
 
-  <div class="gq-grid gq-grid-3">
-    <article class="skill-card">
-      <span>🎵</span>
-      <h3>Musicality</h3>
-      <p>Level 23</p>
+  @if (isLoading) {
+    <section class="gq-card state-card">
+      Loading skills...
+    </section>
+  }
 
-      <div class="gq-progress">
-        <div class="gq-progress-fill" style="width: 82%"></div>
+  @if (apiError) {
+    <section class="error-message">
+      <div>
+        <strong>{{ apiError.message }}</strong>
+
+        @if (apiError.status) {
+          <span>Status: {{ apiError.status }}</span>
+        }
       </div>
-    </article>
 
+      <button class="gq-button-secondary" type="button" (click)="loadSkills()">
+        Try again
+      </button>
+    </section>
+  }
 
-    <article class="skill-card">
-      <span>🧢</span>
-      <h3>Hip Hop</h3>
-      <p>Level 22</p>
+  @if (!isLoading && !apiError && skills.length === 0) {
+    <section class="gq-card state-card">
+      <h3>No skill progression yet</h3>
+      <p>
+        Create training sessions to start building XP across your dance skills.
+      </p>
+    </section>
+  }
 
-      <div class="gq-progress">
-        <div class="gq-progress-fill" style="width: 68%"></div>
-      </div>
-    </article>
+  @if (!isLoading && !apiError && skills.length > 0) {
+    <section class="skills-grid">
+      @for (skill of skills; track trackBySkill($index, skill)) {
+        <article class="gq-card skill-card">
+          <div class="skill-card-header">
+            <div>
+              <div class="skill-icon">
+                {{ getSkillIcon(skill.skill) }}
+              </div>
+            </div>
 
-    <article class="skill-card">
-      <span>🏋️</span>
-      <h3>Strength</h3>
-      <p>Level 20</p>
+            <span class="gq-badge">Level {{ skill.level }}</span>
+          </div>
 
-      <div class="gq-progress">
-        <div class="gq-progress-fill" style="width: 55%"></div>
-      </div>
-    </article>
-  </div>
+          <div>
+            <h3>{{ formatSkill(skill.skill) }}</h3>
+            <p>{{ skill.totalXp }} total XP</p>
+          </div>
+
+          <div>
+            <div class="skill-stats">
+              <span>{{ getSkillProgressPercent(skill) }}% progress</span>
+              <span>{{ skill.xpToNextLevel }} XP to next level</span>
+            </div>
+
+            <div class="gq-progress">
+              <div
+                class="gq-progress-fill"
+                [style.width.%]="getSkillProgressPercent(skill)"
+              ></div>
+            </div>
+          </div>
+        </article>
+      }
+    </section>
+  }
 </section>
