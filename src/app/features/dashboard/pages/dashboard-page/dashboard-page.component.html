@@ -36,20 +36,20 @@
 
   @if (!isLoading && !apiError && dashboard) {
     <div class="dashboard-grid">
-      <section class="gq-card hero-card">
+      <section class="gq-card dashboard-card hero-card">
         <div class="gq-card-header">
           <div>
             <h2 class="gq-card-title">Dancer Progress</h2>
-            <p class="gq-card-subtitle">Your RPG profile overview</p>
+            <p class="gq-card-subtitle">Your current RPG profile summary</p>
           </div>
 
           <span class="gq-badge">Level {{ dashboard.dancerLevel }}</span>
         </div>
 
-        <div class="hero-content">
+        <div class="hero-main">
           <div>
             <h3>{{ formatSkill(dashboard.topSkill) }}</h3>
-            <p class="gq-muted">Current top skill</p>
+            <p>Current top skill</p>
           </div>
 
           <div class="level-badge">
@@ -60,7 +60,7 @@
           </div>
         </div>
 
-        <div class="xp-section">
+        <div>
           <div class="xp-label">
             <span>{{ dashboard.totalXp }} total XP</span>
             <span>{{ dashboard.sessionsCount }} sessions</span>
@@ -72,31 +72,31 @@
         </div>
       </section>
 
-      <section class="gq-card stat-card">
-        <span class="stat-icon">⚡</span>
+      <section class="gq-card dashboard-card stat-card">
+        <span>⚡</span>
         <p>Total XP</p>
         <strong>{{ dashboard.totalXp }}</strong>
       </section>
 
-      <section class="gq-card stat-card">
-        <span class="stat-icon">⏱</span>
+      <section class="gq-card dashboard-card stat-card">
+        <span>⏱</span>
         <p>Training Hours</p>
         <strong>{{ getTotalHours(dashboard.totalTrainingMinutes) }}</strong>
       </section>
 
-      <section class="gq-card stat-card">
-        <span class="stat-icon">✦</span>
+      <section class="gq-card dashboard-card stat-card">
+        <span>✦</span>
         <p>Sessions</p>
         <strong>{{ dashboard.sessionsCount }}</strong>
       </section>
 
-      <section class="gq-card stat-card">
-        <span class="stat-icon">🏆</span>
+      <section class="gq-card dashboard-card stat-card">
+        <span>🏆</span>
         <p>Top Skill</p>
         <strong>{{ formatSkill(dashboard.topSkill) }}</strong>
       </section>
 
-      <section class="gq-card section-card wide-card">
+      <section class="gq-card dashboard-card wide-card">
         <div class="gq-card-header">
           <div>
             <h2 class="gq-card-title">Skill Progression</h2>
@@ -111,10 +111,10 @@
         }
 
         @if (dashboard.skillProgression.length > 0) {
-          <div class="skill-list">
+          <div class="list-section">
             @for (skill of dashboard.skillProgression; track trackBySkill($index, skill)) {
-              <article class="skill-row">
-                <div class="skill-row-header">
+              <article class="data-row">
+                <div class="data-row-header">
                   <div>
                     <h3>{{ formatSkill(skill.skill) }}</h3>
                     <small>{{ skill.totalXp }} XP</small>
@@ -135,7 +135,7 @@
         }
       </section>
 
-      <section class="gq-card section-card">
+      <section class="gq-card dashboard-card">
         <div class="gq-card-header">
           <div>
             <h2 class="gq-card-title">Recent Distribution</h2>
@@ -150,13 +150,13 @@
         }
 
         @if (dashboard.recentTrainingDistribution.length > 0) {
-          <div class="distribution-list">
+          <div class="list-section">
             @for (
               item of dashboard.recentTrainingDistribution;
               track trackBySkill($index, item)
             ) {
-              <article class="distribution-row">
-                <div class="distribution-row-header">
+              <article class="data-row">
+                <div class="data-row-header">
                   <div>
                     <h3>{{ formatSkill(item.skill) }}</h3>
                     <small>
@@ -181,7 +181,7 @@
         }
       </section>
 
-      <section class="gq-card section-card wide-card">
+      <section class="gq-card dashboard-card wide-card">
         <div class="gq-card-header">
           <div>
             <h2 class="gq-card-title">Coaching Insights</h2>
@@ -196,13 +196,13 @@
         }
 
         @if (dashboard.coachingInsights.length > 0) {
-          <div class="insight-list">
+          <div class="list-section">
             @for (
               insight of dashboard.coachingInsights;
               track trackByInsight($index, insight)
             ) {
               <article
-                class="insight-row"
+                class="data-row insight-row"
                 [ngClass]="getInsightClass(insight)"
               >
                 <span class="insight-icon">✧</span>

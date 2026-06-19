@@ -3,11 +3,22 @@
   gap: var(--space-5);
 }
 
-.dashboard-header {
+.dashboard-toolbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--space-4);
+}
+
+.section-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 900;
+}
+
+.section-subtitle {
+  margin: var(--space-1) 0 0;
+  color: var(--color-text-muted);
 }
 
 .dashboard-grid {
@@ -16,34 +27,31 @@
   gap: var(--space-4);
 }
 
-.hero-card,
-.stat-card,
-.section-card,
-.state-card {
+.dashboard-card {
   padding: var(--space-5);
 }
 
 .hero-card {
-  min-height: 18rem;
+  grid-row: span 2;
   display: grid;
-  align-content: space-between;
+  gap: var(--space-5);
 }
 
-.hero-content {
+.hero-main {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--space-4);
-  margin: var(--space-5) 0;
+  gap: var(--space-5);
 }
 
-.hero-content h3 {
+.hero-main h3 {
   margin: 0;
-  font-size: 1.65rem;
+  font-size: 1.5rem;
 }
 
-.hero-content p {
+.hero-main p {
   margin: var(--space-1) 0 0;
+  color: var(--color-text-muted);
 }
 
 .level-badge {
@@ -91,7 +99,7 @@
   gap: var(--space-2);
 }
 
-.stat-icon {
+.stat-card span {
   font-size: 1.5rem;
 }
 
@@ -101,36 +109,26 @@
 }
 
 .stat-card strong {
-  font-size: 2rem;
-}
-
-.section-card {
-  display: grid;
-  gap: var(--space-4);
+  font-size: 1.75rem;
 }
 
 .wide-card {
   grid-column: span 2;
 }
 
-.skill-list,
-.distribution-list,
-.insight-list {
+.list-section {
   display: grid;
   gap: var(--space-3);
 }
 
-.skill-row,
-.distribution-row,
-.insight-row {
+.data-row {
   padding: var(--space-4);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   background: rgba(15, 23, 42, 0.56);
 }
 
-.skill-row-header,
-.distribution-row-header {
+.data-row-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -138,14 +136,12 @@
   margin-bottom: var(--space-3);
 }
 
-.skill-row h3,
-.distribution-row h3 {
+.data-row h3 {
   margin: 0;
   font-size: 0.95rem;
 }
 
-.skill-row small,
-.distribution-row small {
+.data-row small {
   color: var(--color-text-muted);
   font-weight: 700;
 }
@@ -185,6 +181,7 @@
 }
 
 .state-card {
+  padding: var(--space-8);
   text-align: center;
   color: var(--color-text-muted);
 }
@@ -222,8 +219,8 @@
 }
 
 @media (max-width: 800px) {
-  .dashboard-header,
-  .hero-content,
+  .dashboard-toolbar,
+  .hero-main,
   .error-message {
     align-items: stretch;
     flex-direction: column;
