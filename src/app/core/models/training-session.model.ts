@@ -28,3 +28,11 @@ export interface CreateTrainingSessionRequest {
   skill: DanceSkill;
   notes: string | null;
 }
+
+export interface UpdateTrainingSessionRequest {
+  date: string;
+  durationMinutes: number;
+  intensity: TrainingIntensity;
+  skill: DanceSkill;
+  notes: string | null;
+}

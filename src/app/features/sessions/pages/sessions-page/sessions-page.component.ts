@@ -17,6 +17,7 @@ import { ApiErrorService } from '../../../../core/services/api-error.service';
 export class SessionsPageComponent implements OnInit{
 
   isLoading = false;
+  deletingSessionId: number | null = null;
   sessions: TrainingSession[] = [];
   apiError: ApiError | null = null;
 
@@ -43,6 +44,29 @@ export class SessionsPageComponent implements OnInit{
         this.isLoading = false;
       }
     })
+  }
+
+  deleteSession(deletingSession: TrainingSession): void {
+    const confirmed = window.confirm('Are you sure you want to delete this session?');
+
+    if(!confirmed) {
+      return;
+    }
+
+    this.deletingSessionId = deletingSession.id;
+    this.apiError = null;
+
+    this.trainingSessionService.delete(deletingSession.id).subscribe({
+      next: () => {
+        this.sessions = this.sessions.filter(s => s.id !== deletingSession.id);
+        this.deletingSessionId = null;
+      },
+      error: (error) => {
+        this.apiError = this.apiErrorService.toApiError(error);
+        this.deletingSessionId = null;
+      }
+    });
+
   }
 
   formatSkill(skill: DanceSkill): string {

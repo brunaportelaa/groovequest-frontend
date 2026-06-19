@@ -28,6 +28,10 @@ export const routes: Routes = [
                 component: SessionFormPageComponent
             },
             {
+                path: 'sessions/:id/edit',
+                component: SessionFormPageComponent
+            },
+            {
                 path: 'skills',
                 component: SkillsPageComponent
             }
