@@ -55,21 +55,6 @@ export class DashboardPageComponent implements OnInit {
     })
   }
 
-    const labels: Record<DanceSkill, string> = {
-      HIP_HOP: 'Hip Hop',
-      JAZZ_FUNK: 'Jazz Funk',
-      HOUSE: 'House',
-      PERFORMANCE: 'Performance',
-      FLEXIBILITY: 'Flexibility',
-      FOUNDATION: 'Foundation',
-      MUSICALITY: 'Musicality',
-      CHOREO: 'Choreo',
-      COMPETITION: 'Competition',
-    };
-
-    return labels[skill];
-  }
-
   getTotalHours(totalMinutes: number): number {
     return Math.round((totalMinutes / 60) * 10) / 10;
   }
