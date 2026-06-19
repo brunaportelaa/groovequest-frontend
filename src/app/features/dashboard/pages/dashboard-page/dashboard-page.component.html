@@ -1,49 +1,217 @@
-<div class="dashboard-grid">
-  <section class="gq-card hero-card">
-    <div class="gq-card-header">
+<section class="dashboard-page">
+  <div class="dashboard-toolbar">
+    <div>
+      <h2 class="section-title">Your training overview</h2>
+      <p class="section-subtitle">
+        Track your XP, skill progression, training balance, and coaching insights.
+      </p>
+    </div>
+
+    <a class="gq-button" routerLink="/sessions/new">
+      New Session
+    </a>
+  </div>
+
+  @if (isLoading) {
+    <section class="gq-card state-card">
+      Loading dashboard...
+    </section>
+  }
+
+  @if (apiError) {
+    <section class="error-message">
       <div>
-        <h2 class="gq-card-title">Dancer Progress</h2>
-        <p class="gq-card-subtitle">
-          Your RPG profile overview
-        </p>
+        <strong>{{ apiError.message }}</strong>
+
+        @if (apiError.status) {
+          <span>Status: {{ apiError.status }}</span>
+        }
       </div>
 
-      <span class="gq-badge">Level 24</span>
+      <button class="gq-button-secondary" type="button" (click)="loadDashboard()">
+        Try again
+      </button>
+    </section>
+  }
+
+  @if (!isLoading && !apiError && dashboard) {
+    <div class="dashboard-grid">
+      <section class="gq-card hero-card">
+        <div class="gq-card-header">
+          <div>
+            <h2 class="gq-card-title">Dancer Progress</h2>
+            <p class="gq-card-subtitle">Your RPG profile overview</p>
+          </div>
+
+          <span class="gq-badge">Level {{ dashboard.dancerLevel }}</span>
+        </div>
+
+        <div class="hero-content">
+          <div>
+            <h3>{{ formatSkill(dashboard.topSkill) }}</h3>
+            <p class="gq-muted">Current top skill</p>
+          </div>
+
+          <div class="level-badge">
+            <div>
+              <small>LEVEL</small>
+              <strong>{{ dashboard.dancerLevel }}</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="xp-section">
+          <div class="xp-label">
+            <span>{{ dashboard.totalXp }} total XP</span>
+            <span>{{ dashboard.sessionsCount }} sessions</span>
+          </div>
+
+          <div class="gq-progress">
+            <div class="gq-progress-fill" style="width: 72%"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="gq-card stat-card">
+        <span class="stat-icon">⚡</span>
+        <p>Total XP</p>
+        <strong>{{ dashboard.totalXp }}</strong>
+      </section>
+
+      <section class="gq-card stat-card">
+        <span class="stat-icon">⏱</span>
+        <p>Training Hours</p>
+        <strong>{{ getTotalHours(dashboard.totalTrainingMinutes) }}</strong>
+      </section>
+
+      <section class="gq-card stat-card">
+        <span class="stat-icon">✦</span>
+        <p>Sessions</p>
+        <strong>{{ dashboard.sessionsCount }}</strong>
+      </section>
+
+      <section class="gq-card stat-card">
+        <span class="stat-icon">🏆</span>
+        <p>Top Skill</p>
+        <strong>{{ formatSkill(dashboard.topSkill) }}</strong>
+      </section>
+
+      <section class="gq-card section-card wide-card">
+        <div class="gq-card-header">
+          <div>
+            <h2 class="gq-card-title">Skill Progression</h2>
+            <p class="gq-card-subtitle">Your strongest RPG progression stats</p>
+          </div>
+        </div>
+
+        @if (dashboard.skillProgression.length === 0) {
+          <div class="gq-empty-state">
+            No skill progression data yet.
+          </div>
+        }
+
+        @if (dashboard.skillProgression.length > 0) {
+          <div class="skill-list">
+            @for (skill of dashboard.skillProgression; track trackBySkill($index, skill)) {
+              <article class="skill-row">
+                <div class="skill-row-header">
+                  <div>
+                    <h3>{{ formatSkill(skill.skill) }}</h3>
+                    <small>{{ skill.totalXp }} XP</small>
+                  </div>
+
+                  <span class="gq-badge">Level {{ skill.level }}</span>
+                </div>
+
+                <div class="gq-progress">
+                  <div
+                    class="gq-progress-fill"
+                    [style.width.%]="getSkillProgressPercent(skill)"
+                  ></div>
+                </div>
+              </article>
+            }
+          </div>
+        }
+      </section>
+
+      <section class="gq-card section-card">
+        <div class="gq-card-header">
+          <div>
+            <h2 class="gq-card-title">Recent Distribution</h2>
+            <p class="gq-card-subtitle">Recent training balance by skill</p>
+          </div>
+        </div>
+
+        @if (dashboard.recentTrainingDistribution.length === 0) {
+          <div class="gq-empty-state">
+            No recent distribution data yet.
+          </div>
+        }
+
+        @if (dashboard.recentTrainingDistribution.length > 0) {
+          <div class="distribution-list">
+            @for (
+              item of dashboard.recentTrainingDistribution;
+              track trackBySkill($index, item)
+            ) {
+              <article class="distribution-row">
+                <div class="distribution-row-header">
+                  <div>
+                    <h3>{{ formatSkill(item.skill) }}</h3>
+                    <small>
+                      {{ item.sessionsCount }} sessions · {{ item.totalMinutes }} min
+                    </small>
+                  </div>
+
+                  <span class="gq-badge">
+                    {{ getDistributionPercent(item.totalMinutes, dashboard) }}%
+                  </span>
+                </div>
+
+                <div class="gq-progress">
+                  <div
+                    class="gq-progress-fill"
+                    [style.width.%]="getDistributionPercent(item.totalMinutes, dashboard)"
+                  ></div>
+                </div>
+              </article>
+            }
+          </div>
+        }
+      </section>
+
+      <section class="gq-card section-card wide-card">
+        <div class="gq-card-header">
+          <div>
+            <h2 class="gq-card-title">Coaching Insights</h2>
+            <p class="gq-card-subtitle">Lightweight guidance from your backend rules</p>
+          </div>
+        </div>
+
+        @if (dashboard.coachingInsights.length === 0) {
+          <div class="gq-empty-state">
+            No coaching insights yet.
+          </div>
+        }
+
+        @if (dashboard.coachingInsights.length > 0) {
+          <div class="insight-list">
+            @for (
+              insight of dashboard.coachingInsights;
+              track trackByInsight($index, insight)
+            ) {
+              <article
+                class="insight-row"
+                [ngClass]="getInsightClass(insight)"
+              >
+                <span class="insight-icon">✧</span>
+                <p>{{ insight.message }}</p>
+              </article>
+            }
+          </div>
+        }
+      </section>
     </div>
-
-    <div class="hero-content">
-      <div>
-        <h3>Alex Rivera</h3>
-        <p>The Rhythm Seeker</p>
-      </div>
-    </div>
-
-    <div class="level-badge">
-      <small>Level</small>
-      <strong>24</strong>
-    </div>
-
-    <div class="xp-section">
-      <div class="xp-label">
-        <span>18,450 XP</span>
-        <span>25,000 XP</span>
-      </div>
-    </div>
-
-    <div class="gq-progress">
-      <div class="gq-progress-fill" style="width: 74%"></div>
-    </div>
-  </section>
-
-  <section class="gq-card stat-card">
-    <span class="stat-icon">🔥</span>
-    <p>Training Streak</p>
-    <strong>18 Days</strong>
-  </section>
-
-  <section class="gq-card stat-card">
-    <span class="stat-icon">🔥</span>
-    <p>Total XP</p>
-    <strong>18,450</strong>
-  </section>
-</div>
+  }
+</section>
