@@ -8,6 +8,7 @@ import {
   formatSkill,
   getSkillIcon,
 } from '../../../../core/utils/training-session-presentation';
+import { DanceSkill } from '../../../../core/models/training-session.model';
 
 @Component({
   selector: 'app-analytics-page',
@@ -16,7 +17,7 @@ import {
   styleUrl: './analytics-page.component.scss'
 })
 export class AnalyticsPageComponent implements OnInit {
-    isLoading = false;
+  isLoading = false;
   apiError: ApiError | null = null;
   distribution: RecentTrainingDistribution[] = [];
 
@@ -60,6 +61,30 @@ export class AnalyticsPageComponent implements OnInit {
       (total, item) => total + item.sessionsCount,
       0,
     )
+  }
+
+  getMostTrainedSkill(): RecentTrainingDistribution | null {
+    if (this.distribution.length === 0) {
+      return null;
+    }
+
+    return this.distribution.reduce(
+      (mostTrainedSkill, currentSkill) => {
+        return currentSkill.totalMinutes > mostTrainedSkill.totalMinutes ? currentSkill : mostTrainedSkill;
+      }
+    )
+  }
+
+  getLeastTrainedSkill(): RecentTrainingDistribution | null {
+    if (this.distribution.length === 0) {
+      return null;
+    }
+
+    return this.distribution.reduce((leastTrained, currentItem) => {
+      return currentItem.totalMinutes < leastTrained.totalMinutes
+        ? currentItem
+        : leastTrained;
+    });
   }
 
   getDistributionPercent(item: RecentTrainingDistribution): number {

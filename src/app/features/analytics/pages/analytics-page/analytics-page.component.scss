@@ -21,29 +21,105 @@
   color: var(--color-text-muted);
 }
 
+.analytics-content {
+  display: grid;
+  gap: var(--space-5);
+}
+
 .analytics-summary {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: var(--space-4);
+}
+
+.summary-card {
+  padding: var(--space-5);
+}
+
+.focus-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+}
+
+.focus-skill {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.focus-icon {
+  width: 4rem;
+  height: 4rem;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-lg);
+  background: var(--gradient-purple);
+  box-shadow: var(--shadow-glow-purple);
+  font-size: 2rem;
+}
+
+.focus-card h3 {
+  margin: 0;
+  font-size: 1.35rem;
+}
+
+.focus-card p,
+.summary-stat-card p {
+  margin: var(--space-1) 0 0;
+  color: var(--color-text-muted);
+}
+
+.summary-stat-card {
+  display: grid;
+  align-content: center;
+  gap: var(--space-2);
+}
+
+.summary-stat-card span {
+  font-size: 1.5rem;
+}
+
+.summary-stat-card strong {
+  font-size: 1.8rem;
+}
+
+.balance-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--space-4);
 }
 
-.summary-card {
-  display: grid;
-  gap: var(--space-2);
+.balance-card {
   padding: var(--space-5);
 }
 
-.summary-card span {
-  font-size: 1.5rem;
+.balance-card-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
 }
 
-.summary-card p {
+.balance-icon {
+  width: 3rem;
+  height: 3rem;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-md);
+  background: rgba(139, 92, 246, 0.16);
+  font-size: 1.4rem;
+}
+
+.balance-card h3,
+.balance-card p {
   margin: 0;
-  color: var(--color-text-muted);
 }
 
-.summary-card strong {
-  font-size: 1.8rem;
+.balance-card p {
+  margin-top: var(--space-1);
+  color: var(--color-text-muted);
 }
 
 .distribution-list {
@@ -133,15 +209,24 @@
   color: #fca5a5;
 }
 
+@media (max-width: 1100px) {
+  .analytics-summary,
+  .balance-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 800px) {
   .analytics-header,
+  .focus-card,
   .distribution-header,
   .error-message {
     align-items: stretch;
     flex-direction: column;
   }
 
-  .analytics-summary {
-    grid-template-columns: 1fr;
+  .focus-skill,
+  .distribution-skill {
+    align-items: flex-start;
   }
 }
