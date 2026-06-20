@@ -40,17 +40,52 @@
   }
 
   @if (!isLoading && !apiError && skills.length > 0) {
+  <div class="skills-content">
+    <section class="skills-summary-grid">
+      @if (getStrongestSkill(); as strongestSkill) {
+        <article class="gq-card summary-card featured-skill-card">
+          <div class="featured-skill-main">
+            <div class="featured-skill-icon">
+              {{ getSkillIcon(strongestSkill.skill) }}
+            </div>
+
+            <div>
+              <h3>{{ formatSkill(strongestSkill.skill) }}</h3>
+              <p>Strongest skill by XP</p>
+            </div>
+          </div>
+
+          <span class="gq-badge">
+            Level {{ strongestSkill.level }}
+          </span>
+        </article>
+      }
+
+      <article class="gq-card summary-card summary-stat-card">
+        <span>⚡</span>
+        <p>Total Skill XP</p>
+        <strong>{{ getTotalSkillXp() }}</strong>
+      </article>
+
+      <article class="gq-card summary-card summary-stat-card">
+        <span>🏆</span>
+        <p>Highest Level</p>
+        <strong>{{ getHighestLevel() }}</strong>
+      </article>
+    </section>
+
     <section class="skills-grid">
       @for (skill of skills; track trackBySkill($index, skill)) {
         <article class="gq-card skill-card">
           <div class="skill-card-header">
-            <div>
-              <div class="skill-icon">
-                {{ getSkillIcon(skill.skill) }}
-              </div>
+            <div class="skill-icon">
+              {{ getSkillIcon(skill.skill) }}
             </div>
 
-            <span class="gq-badge">Level {{ skill.level }}</span>
+            <div class="skill-level">
+              <small>Level</small>
+              <strong>{{ skill.level }}</strong>
+            </div>
           </div>
 
           <div>
@@ -59,9 +94,9 @@
           </div>
 
           <div>
-            <div class="skill-stats">
+            <div class="skill-progress-header">
               <span>{{ getSkillProgressPercent(skill) }}% progress</span>
-              <span>{{ skill.xpToNextLevel }} XP to next level</span>
+              <span>{{ skill.xpToNextLevel }} XP left</span>
             </div>
 
             <div class="gq-progress">
@@ -71,8 +106,14 @@
               ></div>
             </div>
           </div>
+
+          <div class="skill-footer">
+            <span>Current XP: {{ skill.totalXp }}</span>
+            <span>Next level: +{{ skill.xpToNextLevel }}</span>
+          </div>
         </article>
       }
     </section>
-  }
+  </div>
+}
 </section>

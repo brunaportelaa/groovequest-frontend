@@ -51,6 +51,31 @@ export class SkillsPageComponent implements OnInit {
     })
   }
 
+  getTotalSkillXp(): number {
+    return this.skills.reduce((total, skill) => total + skill.totalXp, 0);
+  }
+
+  getHighestLevel(): number {
+    if (this.skills.length === 0) {
+      return 0;
+    }
+
+    return Math.max(...this.skills.map((skill) => skill.level));
+  }
+
+  getStrongestSkill(): SkillProgression | null {
+    if (this.skills.length === 0) {
+      return null;
+    }
+
+    return this.skills.reduce((strongestSkill, currentSkill) => {
+      return currentSkill.totalXp > strongestSkill.totalXp
+        ? currentSkill
+        : strongestSkill;
+    });
+  }
+
+
     getSkillProgressPercent(skill: SkillProgression): number {
     const currentLevelXp = skill.totalXp;
     const xpToNextLevel = skill.xpToNextLevel;
@@ -66,5 +91,7 @@ export class SkillsPageComponent implements OnInit {
   trackBySkill(_index: number, skill: SkillProgression): string {
     return skill.skill;
   }
+
+  
 
 }
