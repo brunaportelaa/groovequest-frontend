@@ -4,6 +4,7 @@ import { AppLayoutComponent } from './layout/app-layout/app-layout.component';
 import { SessionsPageComponent } from './features/sessions/pages/sessions-page/sessions-page.component';
 import { SkillsPageComponent } from './features/skills/pages/skills-page/skills-page.component';
 import { SessionFormPageComponent } from './features/sessions/pages/session-form-page/session-form-page.component';
+import { AnalyticsPageComponent } from './features/analytics/pages/analytics-page/analytics-page.component';
 
 export const routes: Routes = [
     {
@@ -34,6 +35,10 @@ export const routes: Routes = [
             {
                 path: 'skills',
                 component: SkillsPageComponent
+            },
+            {
+                path: 'analytics',
+                component: AnalyticsPageComponent
             }
         ]
     },

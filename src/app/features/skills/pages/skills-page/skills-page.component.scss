@@ -3,6 +3,11 @@
   gap: var(--space-5);
 }
 
+.skills-content {
+  display: grid;
+  gap: var(--space-5);
+}
+
 .skills-header {
   display: flex;
   align-items: center;

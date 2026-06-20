@@ -1,0 +1,87 @@
+<section class="analytics-page">
+  <div class="analytics-header">
+    <div>
+      <h2 class="section-title">Training analytics</h2>
+      <p class="section-subtitle">
+        Understand how your recent practice time is distributed across skills.
+      </p>
+    </div>
+  </div>
+
+  @if (isLoading) {
+    <section class="gq-card state-card">
+      Loading analytics...
+    </section>
+  }
+
+  @if (apiError) {
+    <section class="error-message">
+      <div>
+        <strong>{{ apiError.message }}</strong>
+
+        @if (apiError.status) {
+          <span>Status: {{ apiError.status }}</span>
+        }
+      </div>
+
+      <button class="gq-button-secondary" type="button" (click)="loadAnalytics()">
+        Try again
+      </button>
+    </section>
+  }
+
+  @if (!isLoading && !apiError && distribution.length === 0) {
+    <section class="gq-card state-card">
+      <h3>No analytics yet</h3>
+      <p>
+        Add more training sessions to see your recent training distribution.
+      </p>
+    </section>
+  }
+
+  @if (!isLoading && !apiError && distribution.length > 0) {
+    <section class="analytics-summary">
+      <article class="gq-card summary-card">
+        <span>⏱</span>
+        <p>Recent Training Minutes</p>
+        <strong>{{ getTotalRecentMinutes() }}</strong>
+      </article>
+
+      <article class="gq-card summary-card">
+        <span>✦</span>
+        <p>Recent Sessions</p>
+        <strong>{{ getTotalRecentSessions() }}</strong>
+      </article>
+    </section>
+
+    <section class="distribution-list">
+      @for (item of distribution; track trackBySkill($index, item)) {
+        <article class="gq-card distribution-card">
+          <div class="distribution-header">
+            <div class="distribution-skill">
+              <div class="skill-icon">
+                {{ getSkillIcon(item.skill) }}
+              </div>
+
+              <div>
+                <h3>{{ formatSkill(item.skill) }}</h3>
+                <p>{{ item.sessionsCount }} sessions · {{ item.totalMinutes }} min</p>
+              </div>
+            </div>
+
+            <strong class="distribution-percent">
+              {{ getDistributionPercent(item) }}%
+            </strong>
+          </div>
+
+          <div class="gq-progress">
+            <div
+              class="gq-progress-fill"
+              [style.width.%]="getDistributionPercent(item)"
+            ></div>
+          </div>
+        </article>
+      }
+    </section>
+  }
+</section>
